@@ -1,6 +1,6 @@
 CREATE SCHEMA dw_nycviolation;
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.Facts_violations ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.Facts_violations ( 
 	Fact_ID int64 NOT NULL  ,
 	Fine_Amount numeric  ,
 	Penalty_Amount numeric  ,
@@ -14,9 +14,9 @@ CREATE TABLE nycviolation_dw_lgl.INSTANCE.Facts_violations (
 	IssuingAgencyType_ID int64  
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.Facts_violations ADD PRIMARY KEY ( Fact_ID )  NOT ENFORCED;
+ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.Facts_violations ADD PRIMARY KEY ( Fact_ID )  NOT ENFORCED;
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_Datetime ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Datetime ( 
 	Datetime_ID int64 NOT NULL  ,
 	Year int64  ,
 	Quarter int64  ,
@@ -29,30 +29,30 @@ CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_Datetime (
 	Hour int64  
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_Datetime ADD PRIMARY KEY ( Datetime_ID )  NOT ENFORCED;
+ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Datetime ADD PRIMARY KEY ( Datetime_ID )  NOT ENFORCED;
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_IssuingAgencyType ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_IssuingAgencyType ( 
 	IssuingAgencyType_ID int64  ,
 	IssuingAgencyType string  
  );
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_LicenseType ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_LicenseType ( 
 	LicenseType_ID int64 NOT NULL  ,
 	LicenseType string  
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_LicenseType ADD PRIMARY KEY ( LicenseType_ID )  NOT ENFORCED;
+ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_LicenseType ADD PRIMARY KEY ( LicenseType_ID )  NOT ENFORCED;
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_Location ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Location ( 
 	Location_ID int64 NOT NULL  ,
 	State string  ,
 	Precinct string  ,
 	County string  
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_Location ADD PRIMARY KEY ( Location_ID )  NOT ENFORCED;
+ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Location ADD PRIMARY KEY ( Location_ID )  NOT ENFORCED;
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_ViolationType ( 
+CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_ViolationType ( 
 	ViolationType_ID int64  ,
 	ViolationType string  
  );

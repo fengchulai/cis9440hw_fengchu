@@ -1,58 +1,58 @@
-CREATE SCHEMA dw_nycviolation;
+CREATE SCHEMA IF NOT EXISTS "violation";
 
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.Facts_violations ( 
-	Fact_ID int64 NOT NULL  ,
-	Fine_Amount numeric  ,
-	Penalty_Amount numeric  ,
-	Interest_Amount numeric  ,
-	Reduction_Amount numeric  ,
-	Payment_Amount numeric  ,
-	Location_ID int64  ,
-	LicenseType_ID int64  ,
-	Datetime_ID int64  ,
-	ViolationType_ID int64  ,
-	IssuingAgencyType_ID int64  
+CREATE  TABLE "violation".dim_datetime ( 
+	datetime_id          INT  NOT NULL  ,
+	"year"               INT    ,
+	quarter              INT    ,
+	"month"              INT    ,
+	"day"                INT    ,
+	monthname            VARCHAR(255)    ,
+	dayname              VARCHAR(255)    ,
+	weekofmonth          INT    ,
+	weekofyear           INT    ,
+	"hour"               INT    ,
+	CONSTRAINT pk_dim_datetime PRIMARY KEY ( datetime_id )
  );
 
-ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.Facts_violations ADD PRIMARY KEY ( Fact_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Datetime ( 
-	Datetime_ID int64 NOT NULL  ,
-	Year int64  ,
-	Quarter int64  ,
-	Month int64  ,
-	Day int64  ,
-	MonthName string  ,
-	DayName string  ,
-	WeekOfMonth int64  ,
-	WeekOfYear int64  ,
-	Hour int64  
+CREATE  TABLE "violation".dim_issuingagencytype ( 
+	issuingagencytype_id INT    ,
+	issuingagencytype    VARCHAR(255)    ,
+	CONSTRAINT pk_issuingagencytype_id UNIQUE ( issuingagencytype_id ) ,
+	CONSTRAINT pk_issuingagencytype_id_001 UNIQUE ( issuingagencytype_id ) 
  );
 
-ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Datetime ADD PRIMARY KEY ( Datetime_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_IssuingAgencyType ( 
-	IssuingAgencyType_ID int64  ,
-	IssuingAgencyType string  
+CREATE  TABLE "violation".dim_licensetype ( 
+	licensetype_id       INT  NOT NULL  ,
+	licensetype          VARCHAR(255)    ,
+	CONSTRAINT pk_dim_licensetype PRIMARY KEY ( licensetype_id )
  );
 
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_LicenseType ( 
-	LicenseType_ID int64 NOT NULL  ,
-	LicenseType string  
+CREATE  TABLE "violation".dim_location ( 
+	location_id          INT  NOT NULL  ,
+	"state"              VARCHAR(255)    ,
+	precinct             VARCHAR(255)    ,
+	county               VARCHAR(255)    ,
+	CONSTRAINT pk_dim_location PRIMARY KEY ( location_id )
  );
 
-ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_LicenseType ADD PRIMARY KEY ( LicenseType_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Location ( 
-	Location_ID int64 NOT NULL  ,
-	State string  ,
-	Precinct string  ,
-	County string  
+CREATE  TABLE "violation".dim_violationtype ( 
+	violationtype_id     INT    ,
+	violationtype        VARCHAR(255)    ,
+	CONSTRAINT pk_violationtype_id UNIQUE ( violationtype_id ) ,
+	CONSTRAINT pk_violationtype_id_001 UNIQUE ( violationtype_id ) 
  );
 
-ALTER TABLE nycviolation_dw_lgl.dw_nycviolation.dim_Location ADD PRIMARY KEY ( Location_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.dw_nycviolation.dim_ViolationType ( 
-	ViolationType_ID int64  ,
-	ViolationType string  
+CREATE  TABLE "violation".facts_violations ( 
+	fact_id              BIGINT  NOT NULL  ,
+	fine_amount          DECIMAL(5,2)    ,
+	penalty_amount       DECIMAL(5,2)    ,
+	interest_amount      DECIMAL(5,2)    ,
+	reduction_amount     DECIMAL(5,2)    ,
+	payment_amount       DECIMAL(5,2)    ,
+	location_id          INT    ,
+	licensetype_id       INT    ,
+	datetime_id          INT    ,
+	violationtype_id     INT    ,
+	issuingagencytype_id INT    ,
+	CONSTRAINT pk_facts_violations PRIMARY KEY ( fact_id )
  );

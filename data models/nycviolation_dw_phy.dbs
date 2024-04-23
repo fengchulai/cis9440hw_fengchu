@@ -1,96 +1,96 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="nycviolation_dw_lgl" id="GoogleBigQuery-1f72" database="GoogleBigQuery" >
-	<schema name="INSTANCE" catalogname="nycviolation_dw_lgl" >
-		<table name="Facts_violations" >
-			<column name="Fact_ID" type="int64" jt="4" mandatory="y" />
-			<column name="Fine_Amount" type="numeric" length="5" decimal="2" jt="2" />
-			<column name="Penalty_Amount" type="numeric" length="5" decimal="2" jt="2" />
-			<column name="Interest_Amount" type="numeric" length="5" decimal="2" jt="2" />
-			<column name="Reduction_Amount" type="numeric" length="5" decimal="2" jt="2" />
-			<column name="Payment_Amount" type="numeric" length="5" decimal="2" jt="2" />
-			<column name="Location_ID" type="int64" jt="4" />
-			<column name="LicenseType_ID" type="int64" jt="4" />
-			<column name="Datetime_ID" type="int64" jt="4" />
-			<column name="ViolationType_ID" type="int64" jt="4" />
-			<column name="IssuingAgencyType_ID" type="int64" jt="4" />
-			<index name="pk_Facts_violations" unique="PRIMARY_KEY" >
-				<column name="Fact_ID" />
-			</index>
-			<fk name="fk_Facts_violations_dim_Location" virtual="y" to_schema="nycviolation_dw_lgl.INSTANCE" to_table="dim_Location" >
-				<fk_column name="Location_ID" pk="Location_ID" />
-			</fk>
-			<fk name="fk_Facts_violations_dim_LicenseType" virtual="y" to_schema="nycviolation_dw_lgl.INSTANCE" to_table="dim_LicenseType" >
-				<fk_column name="LicenseType_ID" pk="LicenseType_ID" />
-			</fk>
-			<fk name="fk_Facts_violations_dim_Datetime" virtual="y" to_schema="nycviolation_dw_lgl.INSTANCE" to_table="dim_Datetime" >
-				<fk_column name="Datetime_ID" pk="Datetime_ID" />
-			</fk>
-			<fk name="fk_Facts_violations_dim_IssuingAgencyType" virtual="y" to_schema="nycviolation_dw_lgl.INSTANCE" to_table="dim_IssuingAgencyType" >
-				<fk_column name="IssuingAgencyType_ID" pk="IssuingAgencyType_ID" />
-			</fk>
-			<fk name="fk_Facts_violations_dim_ViolationType" virtual="y" to_schema="nycviolation_dw_lgl.INSTANCE" to_table="dim_ViolationType" >
-				<fk_column name="ViolationType_ID" pk="ViolationType_ID" />
-			</fk>
-		</table>
-		<table name="dim_Datetime" >
-			<column name="Datetime_ID" type="int64" jt="4" mandatory="y" />
-			<column name="Year" type="int64" jt="4" />
-			<column name="Quarter" type="int64" jt="4" />
-			<column name="Month" type="int64" jt="4" />
-			<column name="Day" type="int64" jt="4" />
-			<column name="MonthName" type="string" length="255" jt="12" />
-			<column name="DayName" type="string" length="255" jt="12" />
-			<column name="WeekOfMonth" type="int64" jt="4" />
-			<column name="WeekOfYear" type="int64" jt="4" />
-			<column name="Hour" type="int64" jt="4" />
-			<index name="pk_dim_Datetime" unique="PRIMARY_KEY" >
-				<column name="Datetime_ID" />
+<project name="nycviolation_dw_lgl" id="PostgreSQL-7a2" database="PostgreSQL" >
+	<schema name="instance" catalogname="nycviolation_dw_lgl" >
+		<table name="dim_datetime" prior="dim_Datetime" >
+			<column name="datetime_id" prior="Datetime_ID" type="INT" jt="4" mandatory="y" />
+			<column name="year" prior="Year" type="INT" jt="4" />
+			<column name="quarter" prior="Quarter" type="INT" jt="4" />
+			<column name="month" prior="Month" type="INT" jt="4" />
+			<column name="day" prior="Day" type="INT" jt="4" />
+			<column name="monthname" prior="MonthName" type="VARCHAR" length="255" jt="12" />
+			<column name="dayname" prior="DayName" type="VARCHAR" length="255" jt="12" />
+			<column name="weekofmonth" prior="WeekOfMonth" type="INT" jt="4" />
+			<column name="weekofyear" prior="WeekOfYear" type="INT" jt="4" />
+			<column name="hour" prior="Hour" type="INT" jt="4" />
+			<index name="pk_dim_datetime" unique="PRIMARY_KEY" >
+				<column name="datetime_id" />
 			</index>
 		</table>
-		<table name="dim_IssuingAgencyType" >
-			<column name="IssuingAgencyType_ID" type="int64" jt="4" />
-			<column name="IssuingAgencyType" type="string" length="255" jt="12" />
-			<index name="pk_IssuingAgencyType_ID" unique="UNIQUE_KEY" >
-				<column name="IssuingAgencyType_ID" />
+		<table name="dim_issuingagencytype" prior="dim_IssuingAgencyType" >
+			<column name="issuingagencytype_id" prior="IssuingAgencyType_ID" type="INT" jt="4" />
+			<column name="issuingagencytype" prior="IssuingAgencyType" type="VARCHAR" length="255" jt="12" />
+			<index name="pk_issuingagencytype_id" unique="UNIQUE_KEY" >
+				<column name="issuingagencytype_id" />
 			</index>
-			<index name="pk_IssuingAgencyType_ID_001" unique="UNIQUE_KEY" >
-				<column name="IssuingAgencyType_ID" />
-			</index>
-		</table>
-		<table name="dim_LicenseType" >
-			<column name="LicenseType_ID" type="int64" jt="4" mandatory="y" />
-			<column name="LicenseType" type="string" length="255" jt="12" />
-			<index name="pk_dim_LicenseType" unique="PRIMARY_KEY" >
-				<column name="LicenseType_ID" />
+			<index name="pk_issuingagencytype_id_001" unique="UNIQUE_KEY" >
+				<column name="issuingagencytype_id" />
 			</index>
 		</table>
-		<table name="dim_Location" >
-			<column name="Location_ID" type="int64" jt="4" mandatory="y" />
-			<column name="State" type="string" length="255" jt="12" />
-			<column name="Precinct" type="string" length="255" jt="12" />
-			<column name="County" type="string" length="255" jt="12" />
-			<index name="pk_dim_Location" unique="PRIMARY_KEY" >
-				<column name="Location_ID" />
+		<table name="dim_licensetype" prior="dim_LicenseType" >
+			<column name="licensetype_id" prior="LicenseType_ID" type="INT" jt="4" mandatory="y" />
+			<column name="licensetype" prior="LicenseType" type="VARCHAR" length="255" jt="12" />
+			<index name="pk_dim_licensetype" unique="PRIMARY_KEY" >
+				<column name="licensetype_id" />
 			</index>
 		</table>
-		<table name="dim_ViolationType" >
-			<column name="ViolationType_ID" type="int64" jt="4" />
-			<column name="ViolationType" type="string" length="255" jt="12" />
-			<index name="pk_ViolationType_ID" unique="UNIQUE_KEY" >
-				<column name="ViolationType_ID" />
+		<table name="dim_location" prior="dim_Location" >
+			<column name="location_id" prior="Location_ID" type="INT" jt="4" mandatory="y" />
+			<column name="state" prior="State" type="VARCHAR" length="255" jt="12" />
+			<column name="precinct" prior="Precinct" type="VARCHAR" length="255" jt="12" />
+			<column name="county" prior="County" type="VARCHAR" length="255" jt="12" />
+			<index name="pk_dim_location" unique="PRIMARY_KEY" >
+				<column name="location_id" />
 			</index>
-			<index name="pk_ViolationType_ID_001" unique="UNIQUE_KEY" >
-				<column name="ViolationType_ID" />
+		</table>
+		<table name="dim_violationtype" prior="dim_ViolationType" >
+			<column name="violationtype_id" prior="ViolationType_ID" type="INT" jt="4" />
+			<column name="violationtype" prior="ViolationType" type="VARCHAR" length="255" jt="12" />
+			<index name="pk_violationtype_id" unique="UNIQUE_KEY" >
+				<column name="violationtype_id" />
 			</index>
+			<index name="pk_violationtype_id_001" unique="UNIQUE_KEY" >
+				<column name="violationtype_id" />
+			</index>
+		</table>
+		<table name="facts_violations" prior="Facts_violations" >
+			<column name="fact_id" prior="Fact_ID" type="BIGINT" jt="-5" mandatory="y" />
+			<column name="fine_amount" prior="Fine_Amount" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="penalty_amount" prior="Penalty_Amount" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="interest_amount" prior="Interest_Amount" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="reduction_amount" prior="Reduction_Amount" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="payment_amount" prior="Payment_Amount" type="DECIMAL" length="5" decimal="2" jt="3" />
+			<column name="location_id" prior="Location_ID" type="INT" jt="4" />
+			<column name="licensetype_id" prior="LicenseType_ID" type="INT" jt="4" />
+			<column name="datetime_id" prior="Datetime_ID" type="INT" jt="4" />
+			<column name="violationtype_id" prior="ViolationType_ID" type="INT" jt="4" />
+			<column name="issuingagencytype_id" prior="IssuingAgencyType_ID" type="INT" jt="4" />
+			<index name="pk_facts_violations" unique="PRIMARY_KEY" >
+				<column name="fact_id" />
+			</index>
+			<fk name="fk_facts_violations_dim_location" virtual="y" to_schema="nycviolation_dw_lgl.instance" to_table="dim_location" >
+				<fk_column name="location_id" pk="location_id" />
+			</fk>
+			<fk name="fk_facts_violations_dim_licensetype" virtual="y" to_schema="nycviolation_dw_lgl.instance" to_table="dim_licensetype" >
+				<fk_column name="licensetype_id" pk="licensetype_id" />
+			</fk>
+			<fk name="fk_facts_violations_dim_datetime" virtual="y" to_schema="nycviolation_dw_lgl.instance" to_table="dim_datetime" >
+				<fk_column name="datetime_id" pk="datetime_id" />
+			</fk>
+			<fk name="fk_facts_violations_dim_issuingagencytype" virtual="y" to_schema="nycviolation_dw_lgl.instance" to_table="dim_issuingagencytype" >
+				<fk_column name="issuingagencytype_id" pk="issuingagencytype_id" />
+			</fk>
+			<fk name="fk_facts_violations_dim_violationtype" virtual="y" to_schema="nycviolation_dw_lgl.instance" to_table="dim_violationtype" >
+				<fk_column name="violationtype_id" pk="violationtype_id" />
+			</fk>
 		</table>
 	</schema>
-	<layout name="Default Layout" id="Layout-1b5f" confirmed="y" show_relation="columns" >
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="Facts_violations" color="C1D8EE" x="304" y="224" />
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="dim_Datetime" color="C1D8EE" x="576" y="336" />
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="dim_IssuingAgencyType" color="C1D8EE" x="304" y="512" />
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="dim_LicenseType" color="C1D8EE" x="560" y="192" />
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="dim_Location" color="C1D8EE" x="48" y="240" />
-		<entity schema="nycviolation_dw_lgl.INSTANCE" name="dim_ViolationType" color="C1D8EE" x="48" y="432" />
+	<layout name="Default Layout" id="Layout-121d" confirmed="y" show_relation="columns" >
+		<entity schema="nycviolation_dw_lgl.instance" name="dim_datetime" color="C1D8EE" x="576" y="336" />
+		<entity schema="nycviolation_dw_lgl.instance" name="dim_issuingagencytype" color="C1D8EE" x="304" y="512" />
+		<entity schema="nycviolation_dw_lgl.instance" name="dim_licensetype" color="C1D8EE" x="560" y="192" />
+		<entity schema="nycviolation_dw_lgl.instance" name="dim_location" color="C1D8EE" x="48" y="240" />
+		<entity schema="nycviolation_dw_lgl.instance" name="dim_violationtype" color="C1D8EE" x="48" y="432" />
+		<entity schema="nycviolation_dw_lgl.instance" name="facts_violations" color="C1D8EE" x="304" y="224" />
 		<callout x="48" y="48" pointer="Round" >
 			<comment><![CDATA[This is a layout - a diagram with tools.
 - Create new entities by right-clicking the layout. 
@@ -98,64 +98,64 @@
 - For a better understanding of the schema, create multiple layouts.
 - Deploy the model into the database by converting it first to the physical design.]]></comment>
 		</callout>
-		<script name="SQL_Editor" id="Editor-267a" language="SQL" >
-			<string><![CDATA[CREATE SCHEMA dw_nycviolation;
+		<script name="SQL_Editor" id="Editor-976" language="SQL" >
+			<string><![CDATA[CREATE SCHEMA IF NOT EXISTS "instance";
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.Facts_violations ( 
-	Fact_ID int64 NOT NULL  ,
-	Fine_Amount numeric  ,
-	Penalty_Amount numeric  ,
-	Interest_Amount numeric  ,
-	Reduction_Amount numeric  ,
-	Payment_Amount numeric  ,
-	Location_ID int64  ,
-	LicenseType_ID int64  ,
-	Datetime_ID int64  ,
-	ViolationType_ID int64  ,
-	IssuingAgencyType_ID int64  
+CREATE  TABLE "instance".dim_datetime ( 
+	datetime_id          INT  NOT NULL  ,
+	"year"               INT    ,
+	quarter              INT    ,
+	"month"              INT    ,
+	"day"                INT    ,
+	monthname            VARCHAR(255)    ,
+	dayname              VARCHAR(255)    ,
+	weekofmonth          INT    ,
+	weekofyear           INT    ,
+	"hour"               INT    ,
+	CONSTRAINT pk_dim_datetime PRIMARY KEY ( datetime_id )
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.Facts_violations ADD PRIMARY KEY ( Fact_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_Datetime ( 
-	Datetime_ID int64 NOT NULL  ,
-	Year int64  ,
-	Quarter int64  ,
-	Month int64  ,
-	Day int64  ,
-	MonthName string  ,
-	DayName string  ,
-	WeekOfMonth int64  ,
-	WeekOfYear int64  ,
-	Hour int64  
+CREATE  TABLE "instance".dim_issuingagencytype ( 
+	issuingagencytype_id INT    ,
+	issuingagencytype    VARCHAR(255)    ,
+	CONSTRAINT pk_issuingagencytype_id UNIQUE ( issuingagencytype_id ) ,
+	CONSTRAINT pk_issuingagencytype_id_001 UNIQUE ( issuingagencytype_id ) 
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_Datetime ADD PRIMARY KEY ( Datetime_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_IssuingAgencyType ( 
-	IssuingAgencyType_ID int64  ,
-	IssuingAgencyType string  
+CREATE  TABLE "instance".dim_licensetype ( 
+	licensetype_id       INT  NOT NULL  ,
+	licensetype          VARCHAR(255)    ,
+	CONSTRAINT pk_dim_licensetype PRIMARY KEY ( licensetype_id )
  );
 
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_LicenseType ( 
-	LicenseType_ID int64 NOT NULL  ,
-	LicenseType string  
+CREATE  TABLE "instance".dim_location ( 
+	location_id          INT  NOT NULL  ,
+	"state"              VARCHAR(255)    ,
+	precinct             VARCHAR(255)    ,
+	county               VARCHAR(255)    ,
+	CONSTRAINT pk_dim_location PRIMARY KEY ( location_id )
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_LicenseType ADD PRIMARY KEY ( LicenseType_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_Location ( 
-	Location_ID int64 NOT NULL  ,
-	State string  ,
-	Precinct string  ,
-	County string  
+CREATE  TABLE "instance".dim_violationtype ( 
+	violationtype_id     INT    ,
+	violationtype        VARCHAR(255)    ,
+	CONSTRAINT pk_violationtype_id UNIQUE ( violationtype_id ) ,
+	CONSTRAINT pk_violationtype_id_001 UNIQUE ( violationtype_id ) 
  );
 
-ALTER TABLE nycviolation_dw_lgl.INSTANCE.dim_Location ADD PRIMARY KEY ( Location_ID )  NOT ENFORCED;
-
-CREATE TABLE nycviolation_dw_lgl.INSTANCE.dim_ViolationType ( 
-	ViolationType_ID int64  ,
-	ViolationType string  
+CREATE  TABLE "instance".facts_violations ( 
+	fact_id              BIGINT  NOT NULL  ,
+	fine_amount          DECIMAL(5,2)    ,
+	penalty_amount       DECIMAL(5,2)    ,
+	interest_amount      DECIMAL(5,2)    ,
+	reduction_amount     DECIMAL(5,2)    ,
+	payment_amount       DECIMAL(5,2)    ,
+	location_id          INT    ,
+	licensetype_id       INT    ,
+	datetime_id          INT    ,
+	violationtype_id     INT    ,
+	issuingagencytype_id INT    ,
+	CONSTRAINT pk_facts_violations PRIMARY KEY ( fact_id )
  );
 ]]></string>
 		</script>
